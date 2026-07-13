@@ -1,86 +1,102 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Globe, Megaphone, Bot } from "lucide-react";
 
 const projects = [
   {
-    category: "Lead Generation",
-    title: "Multi-Channel Growth Campaign",
+    icon: Globe,
+    title: "Business Website & Lead Generation",
+    category: "Website Development",
     description:
-      "A connected advertising and automation strategy designed to increase qualified leads while reducing acquisition costs.",
+      "A modern, conversion-focused website designed to build credibility, generate enquiries and provide a strong digital presence for growing businesses.",
   },
   {
-    category: "Website Experience",
-    title: "High-Converting Business Website",
+    icon: Megaphone,
+    title: "Performance Marketing Campaign",
+    category: "Meta & TikTok Ads",
     description:
-      "A modern website focused on speed, trust, SEO and conversion optimization to support long-term business growth.",
+      "A scalable advertising strategy focused on reaching the right audience, generating qualified leads and improving return on ad spend.",
   },
   {
-    category: "Marketing Automation",
-    title: "Automated Customer Journey",
+    icon: Bot,
+    title: "Marketing Automation System",
+    category: "Email & AI Automation",
     description:
-      "Integrated CRM, email automation and lead nurturing workflows to improve response time and customer engagement.",
+      "An integrated workflow using email marketing and automation to nurture leads, improve customer engagement and save valuable time.",
   },
 ];
 
 export default function FeaturedProjects() {
   return (
-    <section className="bg-white py-28">
+    <section className="bg-slate-50 py-28">
       <div className="mx-auto max-w-7xl px-6">
 
-        <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
+        {/* Heading */}
 
-          <div className="max-w-2xl">
-            <span className="rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700">
-              Featured Projects
-            </span>
+        <div className="mx-auto max-w-3xl text-center">
 
-            <h2 className="mt-8 text-5xl font-black text-slate-900">
-              Solutions designed for measurable business outcomes.
-            </h2>
+          <span className="rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700">
+            Featured Solutions
+          </span>
 
-            <p className="mt-6 text-lg leading-8 text-slate-600">
-              Every engagement is tailored to the client's goals, combining
-              strategy, execution and analytics into one connected system.
-            </p>
-          </div>
+          <h2 className="mt-8 text-5xl font-black text-slate-900">
+            The Kind of Work We Help Businesses Achieve
+          </h2>
 
-          <Link
-            href="/case-studies"
-            className="inline-flex items-center gap-2 font-semibold text-blue-600 hover:text-blue-700"
-          >
-            View all projects
-            <ArrowRight size={18} />
-          </Link>
+          <p className="mt-8 text-xl leading-9 text-slate-600">
+            As Newbrook Digital grows, this section will showcase real client
+            success stories. For now, these examples demonstrate the types of
+            digital solutions we build to help businesses grow.
+          </p>
 
         </div>
 
+        {/* Cards */}
+
         <div className="mt-20 grid gap-8 lg:grid-cols-3">
-          {projects.map((project) => (
-            <article
-              key={project.title}
-              className="rounded-3xl border border-slate-200 bg-slate-50 p-8 transition-all duration-300 hover:-translate-y-2 hover:bg-white hover:shadow-xl"
-            >
-              <span className="text-sm font-semibold uppercase tracking-widest text-blue-600">
-                {project.category}
-              </span>
 
-              <h3 className="mt-5 text-2xl font-bold text-slate-900">
-                {project.title}
-              </h3>
+          {projects.map((project) => {
+            const Icon = project.icon;
 
-              <p className="mt-5 leading-8 text-slate-600">
-                {project.description}
-              </p>
-
-              <Link
-                href="/contact"
-                className="mt-8 inline-flex items-center gap-2 font-semibold text-slate-900 hover:text-blue-600"
+            return (
+              <div
+                key={project.title}
+                className="rounded-3xl bg-white border border-slate-200 p-8 shadow-sm transition duration-300 hover:-translate-y-2 hover:shadow-xl"
               >
-                Discuss a similar project
-                <ArrowRight size={18} />
-              </Link>
-            </article>
-          ))}
+                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-100">
+                  <Icon className="h-8 w-8 text-blue-600" />
+                </div>
+
+                <span className="mt-8 inline-block rounded-full bg-slate-100 px-3 py-1 text-sm font-semibold text-slate-600">
+                  {project.category}
+                </span>
+
+                <h3 className="mt-6 text-2xl font-bold text-slate-900">
+                  {project.title}
+                </h3>
+
+                <p className="mt-6 leading-8 text-slate-600">
+                  {project.description}
+                </p>
+              </div>
+            );
+          })}
+
+        </div>
+
+        {/* CTA */}
+
+        <div className="mt-20 text-center">
+
+          <Link
+            href="/portfolio"
+            className="inline-flex items-center rounded-full bg-blue-600 px-8 py-4 font-bold text-white transition hover:bg-blue-700"
+          >
+            Explore Our Services
+
+            <ArrowRight className="ml-2 h-5 w-5" />
+
+          </Link>
+
         </div>
 
       </div>

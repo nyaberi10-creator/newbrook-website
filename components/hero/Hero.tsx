@@ -1,204 +1,124 @@
 "use client";
 
 import Link from "next/link";
-import FadeIn from "@/components/ui/FadeIn";
+import Image from "next/image";
+import { ArrowRight, CheckCircle } from "lucide-react";
+
+const highlights = [
+  "High-converting websites",
+  "Meta & TikTok Ads Management",
+  "Klaviyo Email Marketing",
+  "AI Business Automation",
+];
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50 pt-40 pb-32">
+    <section className="relative overflow-hidden bg-white pt-36 pb-24">
+      {/* Background */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute top-0 left-1/2 h-[650px] w-[650px] -translate-x-1/2 rounded-full bg-blue-100 blur-3xl opacity-50" />
+        <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-sky-100 blur-3xl opacity-40" />
+      </div>
 
-      {/* Background Effects */}
+      <div className="mx-auto grid max-w-7xl items-center gap-16 px-6 lg:grid-cols-2">
 
-      <div className="absolute -left-20 top-0 h-96 w-96 rounded-full bg-blue-100 blur-3xl opacity-40"></div>
-      <div className="absolute -right-20 bottom-0 h-96 w-96 rounded-full bg-cyan-100 blur-3xl opacity-40"></div>
+        {/* Left Side */}
 
-      <div className="relative mx-auto max-w-7xl px-6">
+        <div>
 
-        <div className="grid items-center gap-20 lg:grid-cols-2">
+          <span className="inline-flex items-center rounded-full border border-blue-200 bg-blue-50 px-5 py-2 text-sm font-semibold text-blue-700">
+            Digital Growth Partner for Modern Businesses
+          </span>
 
-          {/* LEFT */}
-
-          <FadeIn>
-
-            <span className="inline-flex rounded-full border border-blue-200 bg-blue-50 px-5 py-2 text-sm font-semibold text-blue-700">
-              🚀 Websites • Meta Ads • Klaviyo • AI Automation
+          <h1 className="mt-8 text-5xl font-black leading-tight tracking-tight text-slate-900 lg:text-7xl">
+            Helping Businesses Grow Through
+            <span className="block text-blue-600">
+              Websites, Digital Marketing & AI Automation
             </span>
+          </h1>
 
-            <h1 className="mt-8 text-5xl font-black leading-tight text-slate-900 md:text-6xl">
+          <p className="mt-8 max-w-xl text-xl leading-9 text-slate-600">
+            Newbrook Digital helps ambitious businesses attract more customers,
+            increase conversions, and streamline operations through modern
+            websites, performance marketing, email automation, and AI-powered
+            business systems.
+          </p>
 
-              Helping Businesses Grow Through
+          <div className="mt-10 flex flex-col gap-4 sm:flex-row">
 
-              <span className="text-blue-600">
-                {" "}Smart Websites, Marketing &
-                Automation
-              </span>
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center rounded-full bg-blue-600 px-8 py-4 font-bold text-white transition hover:bg-blue-700"
+            >
+              Book a Free Strategy Call
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
 
-            </h1>
+            <Link
+              href="/portfolio"
+              className="inline-flex items-center justify-center rounded-full border border-slate-300 px-8 py-4 font-semibold text-slate-700 transition hover:border-blue-600 hover:text-blue-600"
+            >
+              View Our Work
+            </Link>
 
-            <p className="mt-8 max-w-xl text-xl leading-9 text-slate-600">
+          </div>
 
-              We create modern websites, manage advertising campaigns,
-              build email marketing systems with Klaviyo,
-              and automate business processes using AI-powered tools.
+          <div className="mt-12 grid gap-4 sm:grid-cols-2">
 
+            {highlights.map((item) => (
+              <div
+                key={item}
+                className="flex items-center gap-3"
+              >
+                <CheckCircle className="h-5 w-5 text-blue-600" />
+                <span className="font-medium text-slate-700">
+                  {item}
+                </span>
+              </div>
+            ))}
+
+          </div>
+
+        </div>
+
+        {/* Right Side */}
+
+        <div className="relative">
+
+          <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl">
+
+            <Image
+              src="/logo.png"
+              alt="Newbrook Digital"
+              width={900}
+              height={900}
+              priority
+              className="h-full w-full object-cover"
+            />
+
+          </div>
+
+          <div className="absolute -bottom-8 -left-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-xl">
+
+            <p className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+              Our Focus
             </p>
 
-            <div className="mt-10 flex flex-wrap gap-5">
+            <h3 className="mt-2 text-xl font-bold text-slate-900">
+              Growth That Matters
+            </h3>
 
-              <Link
-                href="/contact"
-                className="rounded-full bg-blue-600 px-8 py-4 font-semibold text-white transition hover:bg-blue-700"
-              >
-                Book Strategy Call
-              </Link>
+            <p className="mt-2 max-w-xs text-sm leading-7 text-slate-600">
+              We don't just build beautiful websites—we create digital systems
+              that help businesses generate leads, increase sales, and grow
+              sustainably.
+            </p>
 
-              <Link
-                href="/services"
-                className="rounded-full border border-slate-300 px-8 py-4 font-semibold transition hover:border-blue-600 hover:text-blue-600"
-              >
-                Explore Services
-              </Link>
-
-            </div>
-
-            {/* OUR EXPERTISE */}
-
-            <div className="mt-16 grid gap-6 sm:grid-cols-2">
-
-              <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-
-                <h3 className="font-bold text-xl">
-                  Website Development
-                </h3>
-
-                <p className="mt-3 text-slate-600">
-                  Fast, responsive websites built for performance and growth.
-                </p>
-
-              </div>
-
-              <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-
-                <h3 className="font-bold text-xl">
-                  Meta Ads
-                </h3>
-
-                <p className="mt-3 text-slate-600">
-                  Facebook & Instagram advertising focused on generating quality leads.
-                </p>
-
-              </div>
-
-              <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-
-                <h3 className="font-bold text-xl">
-                  Klaviyo Email Marketing
-                </h3>
-
-                <p className="mt-3 text-slate-600">
-                  Automated email flows that keep customers engaged.
-                </p>
-
-              </div>
-
-              <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-
-                <h3 className="font-bold text-xl">
-                  AI Automation
-                </h3>
-
-                <p className="mt-3 text-slate-600">
-                  Smart workflows that save time and improve efficiency.
-                </p>
-
-              </div>
-
-            </div>
-
-          </FadeIn>
-
-          {/* RIGHT */}
-
-          <FadeIn delay={0.3}>
-
-            <div className="rounded-3xl bg-white p-10 shadow-2xl">
-
-              <h2 className="text-3xl font-black text-slate-900">
-                Why Choose Newbrook Digital?
-              </h2>
-
-              <p className="mt-6 leading-8 text-slate-600">
-
-                We partner with businesses to build digital solutions that
-                support sustainable growth. Every project is tailored to your
-                goals and designed with long-term success in mind.
-
-              </p>
-
-              <div className="mt-10 space-y-5">
-
-                <div className="rounded-2xl bg-slate-50 p-5">
-
-                  <h3 className="font-bold">
-                    ✔ Strategy-Driven
-                  </h3>
-
-                  <p className="mt-2 text-slate-600">
-                    Every project begins with understanding your business and
-                    your customers.
-                  </p>
-
-                </div>
-
-                <div className="rounded-2xl bg-slate-50 p-5">
-
-                  <h3 className="font-bold">
-                    ✔ Built for Growth
-                  </h3>
-
-                  <p className="mt-2 text-slate-600">
-                    Websites and marketing systems designed to scale as your
-                    business grows.
-                  </p>
-
-                </div>
-
-                <div className="rounded-2xl bg-slate-50 p-5">
-
-                  <h3 className="font-bold">
-                    ✔ Modern Technology
-                  </h3>
-
-                  <p className="mt-2 text-slate-600">
-                    We use Next.js, Klaviyo, Meta Ads, TikTok Ads and AI tools
-                    to create reliable digital solutions.
-                  </p>
-
-                </div>
-
-                <div className="rounded-2xl bg-slate-50 p-5">
-
-                  <h3 className="font-bold">
-                    ✔ Transparent Partnership
-                  </h3>
-
-                  <p className="mt-2 text-slate-600">
-                    Clear communication, honest recommendations and ongoing
-                    support throughout your project.
-                  </p>
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </FadeIn>
+          </div>
 
         </div>
 
       </div>
-
     </section>
   );
 }
