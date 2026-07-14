@@ -1,119 +1,149 @@
-export default function FeaturedProjects() {
-  const projects = [
-    {
-      title: "Website Development",
-      description:
-        "Modern, responsive websites built for speed, SEO, and conversions.",
-      results: [
-        "Responsive Design",
-        "SEO Optimized",
-        "Fast Performance",
-        "Lead Generation",
-      ],
-    },
-    {
-      title: "Meta Ads Campaigns",
-      description:
-        "Data-driven Facebook and Instagram advertising that generates quality leads and sales.",
-      results: [
-        "Lead Generation",
-        "Sales Campaigns",
-        "Audience Targeting",
-        "ROAS Optimization",
-      ],
-    },
-    {
-      title: "Google Ads",
-      description:
-        "High-performing search and display campaigns designed to attract customers with buying intent.",
-      results: [
-        "Search Ads",
-        "Performance Max",
-        "Remarketing",
-        "Conversion Tracking",
-      ],
-    },
-    {
-      title: "Klaviyo Email Marketing",
-      description:
-        "Automated email flows that increase customer retention and lifetime value.",
-      results: [
-        "Welcome Flows",
-        "Cart Recovery",
-        "Post Purchase",
-        "Campaign Management",
-      ],
-    },
-    {
-      title: "AI Automation",
-      description:
-        "Workflow automation using AI and modern automation platforms to eliminate repetitive work.",
-      results: [
-        "CRM Automation",
-        "Lead Qualification",
-        "Workflow Automation",
-        "AI Integrations",
-      ],
-    },
-    {
-      title: "Analytics & Reporting",
-      description:
-        "Actionable dashboards and reporting that help businesses make smarter marketing decisions.",
-      results: [
-        "GA4",
-        "Looker Studio",
-        "Custom Dashboards",
-        "Performance Reports",
-      ],
-    },
-  ];
+import Link from "next/link";
+import {
+  ArrowRight,
+  Globe,
+  Mail,
+  Megaphone,
+  Search,
+  TrendingUp,
+  Workflow,
+} from "lucide-react";
 
+import { caseStudies } from "@/lib/caseStudies";
+
+const icons = {
+  "Website Development": Globe,
+  "Paid Advertising": Megaphone,
+  "Email Marketing": Mail,
+  SEO: Search,
+  Automation: Workflow,
+  "Growth Strategy": TrendingUp,
+};
+
+export default function FeaturedProjects() {
   return (
-    <section className="bg-white py-24">
+    <section
+      id="case-studies"
+      className="bg-slate-50 py-28"
+    >
       <div className="mx-auto max-w-7xl px-6">
 
-        <div className="text-center">
+        {/* Heading */}
+
+        <div className="mx-auto max-w-3xl text-center">
+
           <span className="rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700">
-            Featured Work
+            Featured Case Studies
           </span>
 
-          <h2 className="mt-6 text-5xl font-black">
-            Solutions that drive measurable growth.
+          <h2 className="mt-8 text-5xl font-black text-slate-900">
+            Real business challenges.
+            <br />
+            Measurable growth.
           </h2>
 
-          <p className="mx-auto mt-6 max-w-3xl text-lg text-slate-600">
-            Every project is designed around one goal: helping businesses grow
-            through strategy, technology, and measurable marketing.
+          <p className="mt-8 text-xl leading-9 text-slate-600">
+            Every engagement is focused on solving business problems,
+            improving performance and creating sustainable growth.
           </p>
+
         </div>
 
-        <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project) => (
-            <div
-              key={project.title}
-              className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm transition hover:-translate-y-2 hover:shadow-xl"
-            >
-              <h3 className="text-2xl font-bold">
-                {project.title}
-              </h3>
+        {/* Cards */}
 
-              <p className="mt-4 text-slate-600">
-                {project.description}
-              </p>
+        <div className="mt-20 grid gap-8 lg:grid-cols-2">
 
-              <div className="mt-8 flex flex-wrap gap-3">
-                {project.results.map((item) => (
-                  <span
-                    key={item}
-                    className="rounded-full bg-blue-100 px-3 py-2 text-sm font-semibold text-blue-700"
-                  >
-                    {item}
-                  </span>
-                ))}
+          {caseStudies.map((study) => {
+
+            const Icon =
+              icons[study.category as keyof typeof icons];
+
+            return (
+
+              <div
+                key={study.slug}
+                className="rounded-3xl border border-slate-200 bg-white p-10 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-blue-200 hover:shadow-xl"
+              >
+
+                <div className="flex items-center">
+
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-100">
+
+                    <Icon className="h-7 w-7 text-blue-600" />
+
+                  </div>
+
+                  <div className="ml-5">
+
+                    <p className="text-sm font-semibold uppercase tracking-wide text-blue-600">
+                      {study.category}
+                    </p>
+
+                    <h3 className="text-2xl font-black text-slate-900">
+                      {study.title}
+                    </h3>
+
+                  </div>
+
+                </div>
+
+                <div className="mt-8">
+
+                  <h4 className="font-bold text-slate-900">
+                    Challenge
+                  </h4>
+
+                  <p className="mt-3 leading-8 text-slate-600">
+                    {study.challenge}
+                  </p>
+
+                </div>
+
+                <div className="mt-8">
+
+                  <h4 className="font-bold text-slate-900">
+                    Solution
+                  </h4>
+
+                  <p className="mt-3 leading-8 text-slate-600">
+                    {study.solution}
+                  </p>
+
+                </div>
+
+                <div className="mt-10 grid grid-cols-3 gap-4">
+
+                  {study.results.map((result) => (
+
+                    <div
+                      key={result}
+                      className="rounded-2xl bg-slate-100 p-4 text-center"
+                    >
+                      <p className="font-bold text-blue-600">
+                        {result}
+                      </p>
+                    </div>
+
+                  ))}
+
+                </div>
+
+                <Link
+                  href={`/portfolio/${study.slug}`}
+                  className="mt-10 inline-flex items-center font-semibold text-blue-600 transition hover:text-blue-700"
+                >
+                  View Full Case Study
+
+                  <ArrowRight className="ml-2 h-4 w-4" />
+
+                </Link>
+
               </div>
 
-            </div>
-          ))}
+            );
+
+          })}
+
         </div>
 
       </div>

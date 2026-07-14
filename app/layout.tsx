@@ -1,14 +1,22 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import JsonLd from "@/components/seo/JsonLd";
+
+import {
+  organizationSchema,
+  websiteSchema,
+  professionalServiceSchema,
+} from "@/lib/schema";
 import ScrollProgress from "@/components/ui/ScrollProgress";
 import BackToTop from "@/components/ui/BackToTop";
 
 const inter = Inter({
   subsets: ["latin"],
+  display: "swap",
   variable: "--font-inter",
 });
 
@@ -16,60 +24,92 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://newbrook.digital"),
 
   title: {
-    default: "Newbrook Digital | Websites, Marketing & AI Automation",
-    template: "%s | Newbrook Digital",
+    default: "NewBrook Digital | Websites, SEO, Paid Ads & AI Automation",
+    template: "%s | NewBrook Digital",
   },
 
   description:
-    "Newbrook Digital helps businesses grow through high-converting websites, Meta Ads, TikTok Ads, Klaviyo Email Marketing, SEO, and AI Automation.",
+    "NewBrook Digital helps ambitious businesses attract more customers, automate marketing, and scale sustainably through high-performing websites, SEO, Meta Ads, TikTok Ads, Klaviyo email marketing, and AI-powered automation.",
+
+  applicationName: "NewBrook Digital",
+
+  category: "Digital Marketing",
 
   keywords: [
     "Website Development",
+    "Web Design",
     "Digital Marketing",
-    "Meta Ads",
-    "TikTok Ads",
     "SEO",
-    "AI Automation",
+    "Technical SEO",
+    "Local SEO",
+    "Meta Ads",
+    "Facebook Ads",
+    "Instagram Ads",
+    "TikTok Ads",
+    "Google Ads",
+    "Email Marketing",
     "Klaviyo",
+    "Marketing Automation",
+    "CRM Automation",
+    "AI Automation",
+    "Lead Generation",
+    "Growth Marketing",
+    "Conversion Optimization",
+    "Landing Pages",
     "Marketing Agency",
-    "Newbrook Digital",
+    "NewBrook Digital",
     "Kenya Web Design",
-    "Business Websites",
+    "Business Growth",
   ],
 
   authors: [
     {
-      name: "Newbrook Digital",
+      name: "NewBrook Digital",
+      url: "https://newbrook.digital",
     },
   ],
 
-  creator: "Newbrook Digital",
+  creator: "NewBrook Digital",
 
-  publisher: "Newbrook Digital",
+  publisher: "NewBrook Digital",
+
+  alternates: {
+    canonical: "/",
+  },
 
   robots: {
     index: true,
     follow: true,
+
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 
   openGraph: {
     type: "website",
+
     locale: "en_US",
+
     url: "https://newbrook.digital",
 
-    siteName: "Newbrook Digital",
+    siteName: "NewBrook Digital",
 
-    title: "Newbrook Digital | Websites, Marketing & AI Automation",
+    title: "NewBrook Digital | Websites, SEO, Paid Ads & AI Automation",
 
     description:
-      "Helping businesses grow through websites, paid advertising, SEO, email marketing and AI automation.",
+      "Helping ambitious businesses grow through high-performing websites, SEO, paid advertising, email marketing and AI automation.",
 
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Newbrook Digital",
+        alt: "NewBrook Digital",
       },
     ],
   },
@@ -77,19 +117,37 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
 
-    title: "Newbrook Digital",
+    title: "NewBrook Digital",
 
     description:
-      "Helping businesses grow through websites, paid advertising, SEO and AI automation.",
+      "Helping businesses grow through websites, SEO, paid advertising and AI automation.",
 
     images: ["/og-image.jpg"],
+
+    creator: "@newbrookdigital",
   },
 
   icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    icon: [
+      {
+        url: "/favicon.ico",
+      },
+    ],
+
     shortcut: "/favicon.ico",
+
+    apple: "/apple-touch-icon.png",
   },
+
+  formatDetection: {
+    telephone: false,
+    email: false,
+    address: false,
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#2563eb",
 };
 
 export default function RootLayout({
@@ -97,23 +155,58 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    name: "NewBrook Digital",
+    url: "https://newbrook.digital",
+    logo: "https://newbrook.digital/logo.png",
+    image: "https://newbrook.digital/og-image.jpg",
+
+    description:
+      "Digital marketing agency helping businesses grow through websites, SEO, paid advertising, email marketing and AI automation.",
+
+    email: "hello@newbrook.digital",
+
+    sameAs: [
+      "https://www.linkedin.com/company/newbrook-digital",
+      "https://www.facebook.com/",
+      "https://www.instagram.com/",
+    ],
+
+    areaServed: {
+      "@type": "Country",
+      name: "Worldwide",
+    },
+
+    knowsAbout: [
+      "Website Development",
+      "SEO",
+      "Meta Ads",
+      "TikTok Ads",
+      "Google Ads",
+      "Email Marketing",
+      "AI Automation",
+      "Marketing Strategy",
+      "Growth Systems",
+    ],
+  };
+
   return (
     <html lang="en" className="scroll-smooth">
       <body
         className={`${inter.variable} bg-white font-sans text-slate-900 antialiased`}
       >
-        {/* Progress Bar */}
+       
+        <JsonLd data={organizationSchema} />
+        <JsonLd data={websiteSchema} />
+        <JsonLd data={professionalServiceSchema} />
 
         <ScrollProgress />
 
-        {/* Back To Top */}
-
         <BackToTop />
 
-        {/* Website */}
-
         <div className="flex min-h-screen flex-col">
-
           <Navbar />
 
           <main className="flex-1 pt-20">
@@ -121,9 +214,7 @@ export default function RootLayout({
           </main>
 
           <Footer />
-
         </div>
-
       </body>
     </html>
   );

@@ -1,84 +1,77 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
+
+const siteUrl = "https://newbrook.digital";
 
 export const siteConfig = {
-  name: "Newbrook Digital",
+  name: "NewBrook Digital",
+
+  shortName: "NewBrook",
+
   description:
-    "Newbrook Digital helps businesses grow with modern websites, Meta Ads, TikTok Ads, Klaviyo email marketing, AI automation, and digital strategy.",
+    "Helping ambitious businesses grow through websites, SEO, paid advertising, email marketing and AI automation.",
 
-  url: "https://newbrook.digital",
+  url: siteUrl,
 
-  ogImage: "/og-image.jpg",
+  ogImage: `${siteUrl}/og-image.jpg`,
 
-  links: {
-    email: "mailto:newbrooksdigital@gmail.com",
-    phone: "tel:+254729178171",
-  },
+  email: "hello@newbrook.digital",
 
-  keywords: [
-    "Website Development",
-    "Web Design",
-    "Next.js",
-    "Meta Ads",
-    "Facebook Ads",
-    "Instagram Ads",
-    "TikTok Ads",
-    "Email Marketing",
-    "Klaviyo",
-    "Marketing Automation",
-    "AI Automation",
-    "SEO",
-    "Digital Marketing",
-    "Newbrook Digital",
-  ],
+  phone: "+254 XXX XXX XXX",
 };
 
-export const defaultMetadata: Metadata = {
-  title: {
-    default: "Newbrook Digital",
-    template: "%s | Newbrook Digital",
-  },
+interface SEOProps {
+  title: string;
+  description: string;
+  path?: string;
+  image?: string;
+}
 
-  description: siteConfig.description,
+export function generateSEO({
+  title,
+  description,
+  path = "",
+  image,
+}: SEOProps): Metadata {
+  const url = `${siteConfig.url}${path}`;
 
-  keywords: siteConfig.keywords,
+  return {
+    title,
 
-  authors: [
-    {
-      name: "Newbrook Digital",
+    description,
+
+    alternates: {
+      canonical: url,
     },
-  ],
 
-  creator: "Newbrook Digital",
+    openGraph: {
+      title,
 
-  publisher: "Newbrook Digital",
+      description,
 
-  metadataBase: new URL(siteConfig.url),
+      url,
 
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: siteConfig.url,
-    title: "Newbrook Digital",
-    description: siteConfig.description,
-    siteName: "Newbrook Digital",
-    images: [
-      {
-        url: siteConfig.ogImage,
-        width: 1200,
-        height: 630,
-      },
-    ],
-  },
+      siteName: siteConfig.name,
 
-  twitter: {
-    card: "summary_large_image",
-    title: "Newbrook Digital",
-    description: siteConfig.description,
-    images: [siteConfig.ogImage],
-  },
+      type: "website",
 
-  robots: {
-    index: true,
-    follow: true,
-  },
-};
+      images: [
+        {
+          url: image ?? siteConfig.ogImage,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+
+    twitter: {
+      card: "summary_large_image",
+
+      title,
+
+      description,
+
+      images: [image ?? siteConfig.ogImage],
+    },
+  };
+}

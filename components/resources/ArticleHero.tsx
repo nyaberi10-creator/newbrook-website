@@ -1,5 +1,3 @@
-import { Clock3, FolderOpen } from "lucide-react";
-
 interface ArticleHeroProps {
   category: string;
   title: string;
@@ -14,28 +12,28 @@ export default function ArticleHero({
   readingTime,
 }: ArticleHeroProps) {
   return (
-    <section className="border-b border-slate-200 bg-white py-20">
-      <div className="mx-auto max-w-4xl px-6">
+    <section className="bg-gradient-to-br from-slate-900 via-slate-800 to-blue-900 py-24 text-white">
 
-        <div className="inline-flex items-center rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700">
-          <FolderOpen className="mr-2 h-4 w-4" />
+      <div className="mx-auto max-w-5xl px-6">
+
+        <span className="rounded-full bg-blue-500/20 px-4 py-2 text-sm font-semibold text-blue-300">
           {category}
-        </div>
+        </span>
 
-        <h1 className="mt-8 text-5xl font-black leading-tight text-slate-900 lg:text-6xl">
+        <h1 className="mt-8 text-5xl font-black leading-tight lg:text-6xl">
           {title}
         </h1>
 
-        <p className="mt-8 text-xl leading-9 text-slate-600">
+        <p className="mt-8 max-w-3xl text-xl leading-9 text-slate-300">
           {description}
         </p>
 
-        <div className="mt-10 flex items-center text-slate-500">
-          <Clock3 className="mr-2 h-5 w-5" />
-          {readingTime}
+        <div className="mt-8 text-sm font-medium text-slate-400">
+          {readingTime} read
         </div>
 
       </div>
+
     </section>
   );
 }
