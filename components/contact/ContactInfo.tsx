@@ -28,7 +28,7 @@ const contactDetails = [
   {
     icon: MapPin,
     title: "Location",
-    value: "Nairobi, Kenya",
+    value: "Wyoming, US",
     description: "Serving clients across Kenya and worldwide.",
   },
 ];

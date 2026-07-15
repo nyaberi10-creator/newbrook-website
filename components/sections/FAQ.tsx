@@ -10,7 +10,7 @@ const faqs = [
       "We help businesses grow through website development, Meta Ads, TikTok Ads, email marketing with Klaviyo, SEO, AI automation and digital strategy.",
   },
   {
-    question: "Do you work with businesses outside Kenya?",
+    question: "Do you work with businesses outside US?",
     answer:
       "Yes. We work remotely with businesses around the world using modern collaboration tools, making it easy to deliver projects regardless of location.",
   },

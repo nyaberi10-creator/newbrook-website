@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     "Landing Pages",
     "Marketing Agency",
     "NewBrook Digital",
-    "Kenya Web Design",
+    "US Web Design",
     "Business Growth",
   ],
 
