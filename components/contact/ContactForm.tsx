@@ -1,10 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { trackEvent } from "@/lib/analytics";
+import { useRouter } from "next/navigation";
 
 export default function ContactForm() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [formStarted, setFormStarted] = useState(false);
+  const router = useRouter();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -16,6 +20,17 @@ export default function ContactForm() {
     budget: "Under $1,000",
     message: "",
   });
+
+  const trackFormStart = () => {
+    if (!formStarted) {
+      trackEvent("form_start", {
+        form_name: "Strategy Session",
+        page: window.location.pathname,
+      });
+
+      setFormStarted(true);
+    }
+  };
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -49,7 +64,16 @@ export default function ContactForm() {
         throw new Error("Failed to send message");
       }
 
+      trackEvent("generate_lead", {
+        form_name: "Strategy Session",
+        service: formData.service,
+        budget: formData.budget,
+        page: window.location.pathname,
+      });
+
       setSuccess(true);
+
+      router.push("/thank-you");
 
       setFormData({
         name: "",
@@ -61,6 +85,9 @@ export default function ContactForm() {
         budget: "Under $1,000",
         message: "",
       });
+
+      setFormStarted(false);
+
     } catch (err) {
       alert("Something went wrong. Please try again.");
       console.error(err);
@@ -118,7 +145,7 @@ export default function ContactForm() {
                   key={item}
                   className="flex items-start gap-4"
                 >
-                  <div className="mt-2 h-3 w-3 rounded-full bg-blue-600"></div>
+                  <div className="mt-2 h-3 w-3 rounded-full bg-blue-600" />
 
                   <p className="text-lg text-slate-700">
                     {item}
@@ -151,6 +178,7 @@ export default function ContactForm() {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
+                  onFocus={trackFormStart}
                   required
                   type="text"
                   placeholder="John Doe"
@@ -169,6 +197,7 @@ export default function ContactForm() {
                   name="business"
                   value={formData.business}
                   onChange={handleChange}
+                  onFocus={trackFormStart}
                   type="text"
                   placeholder="ABC Company"
                   className="w-full rounded-xl border border-slate-300 px-4 py-3 focus:border-blue-600 focus:outline-none"
@@ -188,6 +217,7 @@ export default function ContactForm() {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
+                    onFocus={trackFormStart}
                     required
                     type="email"
                     placeholder="you@example.com"
@@ -206,8 +236,9 @@ export default function ContactForm() {
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
+                    onFocus={trackFormStart}
                     type="text"
-                    placeholder="+254..."
+                    placeholder="+1..."
                     className="w-full rounded-xl border border-slate-300 px-4 py-3 focus:border-blue-600 focus:outline-none"
                   />
 
@@ -225,6 +256,7 @@ export default function ContactForm() {
                   name="website"
                   value={formData.website}
                   onChange={handleChange}
+                  onFocus={trackFormStart}
                   type="url"
                   placeholder="https://yourwebsite.com"
                   className="w-full rounded-xl border border-slate-300 px-4 py-3 focus:border-blue-600 focus:outline-none"
@@ -244,6 +276,7 @@ export default function ContactForm() {
                     name="service"
                     value={formData.service}
                     onChange={handleChange}
+                    onFocus={trackFormStart}
                     className="w-full rounded-xl border border-slate-300 px-4 py-3"
                   >
                     <option>Website Development</option>
@@ -266,6 +299,7 @@ export default function ContactForm() {
                     name="budget"
                     value={formData.budget}
                     onChange={handleChange}
+                    onFocus={trackFormStart}
                     className="w-full rounded-xl border border-slate-300 px-4 py-3"
                   >
                     <option>Under $1,000</option>
@@ -289,6 +323,7 @@ export default function ContactForm() {
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
+                  onFocus={trackFormStart}
                   rows={6}
                   placeholder="Tell us about your business and your goals..."
                   className="w-full rounded-xl border border-slate-300 px-4 py-3 focus:border-blue-600 focus:outline-none"
@@ -297,7 +332,14 @@ export default function ContactForm() {
               </div>
 
               <button
+                type="submit"
                 disabled={loading}
+                onClick={() =>
+                  trackEvent("book_strategy_click", {
+                    location: "Contact Form",
+                    page: window.location.pathname,
+                  })
+                }
                 className="w-full rounded-xl bg-blue-600 py-4 text-lg font-bold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-400"
               >
                 {loading

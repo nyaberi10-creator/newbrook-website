@@ -5,12 +5,10 @@ export async function POST(req: Request) {
     const apiKey = process.env.RESEND_API_KEY;
 
     if (!apiKey) {
-      console.error("Missing RESEND_API_KEY");
-
       return Response.json(
         {
           success: false,
-          message: "Email service is not configured.",
+          message: "RESEND_API_KEY is not configured.",
         },
         {
           status: 500,
@@ -33,17 +31,22 @@ export async function POST(req: Request) {
       message,
     } = body;
 
-    const { data, error } = await resend.emails.send({
+    // ===================================================
+    // EMAIL TO YOU (Business Notification)
+    // ===================================================
+
+    const adminEmail = await resend.emails.send({
       from: "Newbrook Website <onboarding@resend.dev>",
 
+      // Change to your email
       to: ["nictonly@gmail.com"],
 
       replyTo: email,
 
-      subject: `🚀 New Website Inquiry - ${name}`,
+      subject: `🚀 New Strategy Request - ${name}`,
 
       html: `
-      <div style="font-family:Arial,sans-serif;max-width:700px;margin:auto;padding:20px">
+      <div style="font-family:Arial,sans-serif;max-width:700px;margin:auto;padding:30px;">
 
         <h1 style="color:#2563eb;">
           New Contact Form Submission
@@ -54,37 +57,37 @@ export async function POST(req: Request) {
         <table style="width:100%;border-collapse:collapse">
 
           <tr>
-            <td><strong>Name</strong></td>
+            <td style="padding:10px;"><strong>Name</strong></td>
             <td>${name}</td>
           </tr>
 
           <tr>
-            <td><strong>Business</strong></td>
+            <td style="padding:10px;"><strong>Business</strong></td>
             <td>${business || "N/A"}</td>
           </tr>
 
           <tr>
-            <td><strong>Email</strong></td>
+            <td style="padding:10px;"><strong>Email</strong></td>
             <td>${email}</td>
           </tr>
 
           <tr>
-            <td><strong>Phone</strong></td>
+            <td style="padding:10px;"><strong>Phone</strong></td>
             <td>${phone || "N/A"}</td>
           </tr>
 
           <tr>
-            <td><strong>Website</strong></td>
+            <td style="padding:10px;"><strong>Website</strong></td>
             <td>${website || "N/A"}</td>
           </tr>
 
           <tr>
-            <td><strong>Service</strong></td>
+            <td style="padding:10px;"><strong>Service</strong></td>
             <td>${service}</td>
           </tr>
 
           <tr>
-            <td><strong>Budget</strong></td>
+            <td style="padding:10px;"><strong>Budget</strong></td>
             <td>${budget}</td>
           </tr>
 
@@ -95,26 +98,109 @@ export async function POST(req: Request) {
         <h2>Project Details</h2>
 
         <p style="line-height:1.8;">
-          ${message}
-        </p>
-
-        <hr/>
-
-        <p style="font-size:13px;color:#666;">
-          Sent automatically from NewBrook Digital.
+          ${message || "No message provided."}
         </p>
 
       </div>
       `,
     });
 
-    if (error) {
-      console.error("Resend Error:", error);
+    // ===================================================
+    // EMAIL TO CLIENT
+    // ===================================================
+
+    const clientEmail = await resend.emails.send({
+      from: "Newbrook Website <onboarding@resend.dev>",
+
+      to: [email],
+
+      subject: "Thank you for contacting NewBrook Digital!",
+
+      html: `
+      <div style="font-family:Arial,sans-serif;max-width:700px;margin:auto;padding:30px;">
+
+        <h1 style="color:#2563eb;">
+          Thank You, ${name}!
+        </h1>
+
+        <p style="font-size:16px;line-height:1.8;">
+          We've received your request for a free strategy session.
+        </p>
+
+        <p style="font-size:16px;line-height:1.8;">
+          Our team is reviewing your project and will contact you within one business day.
+        </p>
+
+        <hr style="margin:30px 0;" />
+
+        <h2>What Happens Next?</h2>
+
+        <ul style="line-height:2;">
+          <li>✅ We review your project.</li>
+          <li>✅ We prepare a growth strategy.</li>
+          <li>✅ We contact you.</li>
+          <li>✅ We discuss the best solution for your business.</li>
+        </ul>
+
+        <div style="margin-top:35px;">
+
+          <a
+            href="https://newbrook.digital/resources"
+            style="
+              background:#2563eb;
+              color:white;
+              text-decoration:none;
+              padding:14px 28px;
+              border-radius:8px;
+              display:inline-block;
+              font-weight:bold;
+            "
+          >
+            Explore Free Resources
+          </a>
+
+        </div>
+
+        <hr style="margin:40px 0;" />
+
+        <p style="font-size:15px;color:#666;">
+          Thank you for choosing
+          <strong> NewBrook Digital</strong>.
+        </p>
+
+        <p style="font-size:14px;color:#888;">
+          Website: https://newbrook.digital
+        </p>
+
+      </div>
+      `,
+    });
+
+    // ===================================================
+    // CHECK FOR ERRORS
+    // ===================================================
+
+    if (adminEmail.error) {
+      console.error(adminEmail.error);
 
       return Response.json(
         {
           success: false,
-          message: "Unable to send email.",
+          error: adminEmail.error,
+        },
+        {
+          status: 500,
+        }
+      );
+    }
+
+    if (clientEmail.error) {
+      console.error(clientEmail.error);
+
+      return Response.json(
+        {
+          success: false,
+          error: clientEmail.error,
         },
         {
           status: 500,
@@ -124,12 +210,12 @@ export async function POST(req: Request) {
 
     return Response.json({
       success: true,
-      message: "Email sent successfully.",
-      data,
+      message: "Emails sent successfully.",
     });
 
   } catch (error) {
-    console.error("Server Error:", error);
+
+    console.error("SERVER ERROR:", error);
 
     return Response.json(
       {
