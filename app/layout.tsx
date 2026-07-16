@@ -5,6 +5,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import JsonLd from "@/components/seo/JsonLd";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 import {
   organizationSchema,
@@ -215,6 +216,7 @@ export default function RootLayout({
 
           <Footer />
         </div>
+        <GoogleAnalytics gaId="G-YBQGCW4NJ6" />
       </body>
     </html>
   );
