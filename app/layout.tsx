@@ -24,6 +24,10 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL("https://newbrook.digital"),
 
+   verification: {
+    google: "b1yXo3SXw2-eMh7FLxIxUocmVutdbIQpFBD76y47ULg",
+  },
+
   title: {
     default: "NewBrook Digital | Websites, SEO, Paid Ads & AI Automation",
     template: "%s | NewBrook Digital",
